@@ -1,0 +1,85 @@
+class Child:
+  def __init__(self):
+      self.child_data = {}
+      self.health_data = {
+          "flue": {"spo2_min": 0, "spo2_max": 10, "affected_blood_group": "A+"},
+          "cough": {"spo2_min": 2, "spo2_max": 25, "affected_blood_group": "O+"},
+          "cold": {"spo2_min": 8, "spo2_max": 45, "affected_blood_group": "B+"}
+      }
+      self.vaccination_update = {
+          "Gen-5M": {"dosage": "1.5mg", "day": "Monday"},
+          "XNM-6F": {"dosage": "1.35mg", "day": "Wednesday"},
+          "RFM-9K": {"dosage": "1.22mg", "day": "Saturday"}
+      }
+
+  def add_child_data(self, patient_no, child_name, child_age, child_gender, blood_group):
+      self.child_data[patient_no] = {
+          "child_name": child_name,
+          "age": child_age,
+          "gender": child_gender,
+          "blood_group": blood_group
+      }
+      print(f"Child data added successfully for patient number {patient_no}")
+
+  def health_details(self, patient_no, symptoms):
+      if patient_no in self.child_data:
+          if symptoms in self.health_data:
+              health_info = self.health_data[symptoms]
+              print(f"Symptom: {symptoms}")
+              print(f"SPO2 Range: {health_info['spo2_min']} - {health_info['spo2_max']}")
+              print(f"Affected Blood Group: {health_info['affected_blood_group']}")
+          else:
+              print("Symptom not recognized in the system.")
+      else:
+          print("Patient number not found.")
+
+  def vaccination_details(self, patient_no, vaccination_name, allocate_date):
+      if patient_no in self.child_data:
+          if vaccination_name in self.vaccination_update:
+              vacc_info = self.vaccination_update[vaccination_name]
+              print(f"Vaccination: {vaccination_name}")
+              print(f"Dosage: {vacc_info['dosage']}")
+              print(f"Scheduled Day: {vacc_info['day']}")
+              print(f"Allocated Date: {allocate_date}")
+          else:
+              print("Vaccination name not recognized.")
+      else:
+          print("Patient number not found.")
+
+def main():
+  R = Child()
+  while True:
+      print("1. Add Child")
+      print("2. Health Check")
+      print("3. Vaccination")
+      print("4. Exit")
+
+      choice = int(input("Enter your choice: "))
+      if choice == 1:
+          patient_no = int(input("Enter Patient Number: "))
+          name = input("Enter Child Name: ")
+          age = int(input("Enter Child Age: "))
+          gender = input("Enter Child Gender: ")
+          blood_group = input("Enter Blood Group: ")
+          R.add_child_data(patient_no, name, age, gender, blood_group)
+
+      elif choice == 2:
+          patient_no = int(input("Enter Patient Number: "))
+          symptoms = input("Enter Symptoms: ")
+          R.health_details(patient_no, symptoms)
+
+      elif choice == 3:
+          patient_no = int(input("Enter Patient Number: "))
+          vaccination_name = input("Enter Vaccination Type: ")
+          allocate_date = input("Enter Allocation Date: ")
+          R.vaccination_details(patient_no, vaccination_name, allocate_date)
+
+      elif choice == 4:
+          print("Exiting...")
+          break
+
+      else:
+          print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+  main()
